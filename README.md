@@ -1,6 +1,9 @@
 # life-in-digua
 
-An Original Mysterious Galgame.
+打开 lifeindigua.html 以游玩。
+
+An Original Mysterious Galgame.    
+
 一个原创悬疑 Galgame。
 
 # 更新日志
