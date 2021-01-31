@@ -55,21 +55,21 @@ function fadeIn(ele,speed){
 
 var current_chapter=0;
 var conver_id=0;
-var converlist=["","0你一定是新来的侦探吧！我叫 Solokov，是地瓜星的副首长。","1是的，您好。"];//0/1+content
-var is_end=[-1,0];
-var chap_end=[-1,0];
-var have_options=[-1,0];
-var comment=[-1];//0/1+content
+var converlist=["","0你一定是新来的侦探吧！我叫 Solokov，是地瓜星的副首长。","1我是 Belarus 侦探，您好。",
+"0希望你能尽快找到杀害地瓜的凶手，我们会将他绳之以法。","1我会尽我的全力的。","0拜托您了。","1test"];//0/1+content
+var is_end=[-1,0,0,0,0,0];
+var chap_end=[-1,0,0,0,0,0];
+var have_options=[-1,0,0,0,0,1];
+var comment=[-1,"","","","","我想......@去一趟犯罪现场@先回房间休息@",""];//0/1+content
 var st_chosen=-1;
-var nxt1=[-1];
-var nxt2=[-1];
-var nxt3=[-1];
-var start_ch=[-1];
-var backgroundlist=["","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png"];
-var namelist=["","Solokov@我","Solokov@我"];
+var nxt1=[-1,-1,-1,-1,-1,/*waiting*/-1.,-1];
+var nxt2=[-1,-1,-1,-1,-1,6,-1];
+var nxt3=[-1,-1,-1,-1,-1,-1,-1];
+var start_ch=[-1,1];
+var backgroundlist=["","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png",
+"solokov2.jpg@bela1.png","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png",""];
+var namelist=["","Solokov@我","Solokov@我","Solokov@我","Solokov@我","Solokov@我",""];
 var audiolist=[""];
-var output1=["在遥远的地瓜星上，生活着一群快乐的球......","地瓜领主是这个星球的首长......","一天，球们在地瓜领主的家中发现......","地瓜领主被杀害了！",
-"究竟谁是幕后凶手？","爱恨情仇交织成的冲突，地瓜星上的迷雾重重......","将由你来揭开......"];
 
 
 function setCookie(cname,cvalue,exdays){
@@ -135,9 +135,64 @@ function to_end(sign){
 function NEXT_CHAPTER(sign){
 
 }
-
-function PRINT_COM(sign){
-
+function choose_st(oppp){
+    st_chosen=oppp;
+}
+async function PRINT_COM(sign){
+    var target=comment[sign];
+    var header="",option1="",option2="",option3="";
+    var curpos=0;
+    for(;curpos<target.length;curpos++){
+        if(target[curpos]=='@') break;
+        header+=target[curpos];
+    }
+    for(curpos++;curpos<target.length;curpos++){
+        if(target[curpos]=='@') break;
+        option1+=target[curpos];
+    }
+    for(curpos++;curpos<target.length;curpos++){
+        if(target[curpos]=='@') break;
+        option2+=target[curpos];
+    }
+    for(curpos++;curpos<target.length;curpos++){
+        option3+=target[curpos];
+    }
+    document.getElementById('comlead').innerHTML="<h2>"+header+"</h2>";
+    document.getElementById('opa').innerHTML="<button onclick=\"choose_st(1)\">"+option1+"</button>";
+    document.getElementById('opb').innerHTML="<button onclick=\"choose_st(2)\">"+option2+"</button>";
+    document.getElementById('opc').innerHTML="<button onclick=\"choose_st(3)\">"+option3+"</button>";
+    st_chosen=-1;
+    let fulfiller = null;
+    document.addEventListener('keypress', e => {
+        if ((e.keyCode == 13 || e.keyCode == 1) && fulfiller) {
+            fulfiller();
+            fulfiller = null;
+        }
+    });
+    async function press_continue() {
+        return new Promise((fulfill, reject) => {
+            fulfiller = fulfill;
+        });
+    }
+    await press_continue();
+    //window.alert('p');
+    if(st_chosen==1){
+        conver_id=nxt1[conver_id];
+    }
+    else if(st_chosen==2){
+        conver_id=nxt2[conver_id];
+    }
+    else if(st_chosen==3){
+        conver_id=nxt3[conver_id];
+    }
+    else{
+        window.alert("Error Code : 100 !");
+        return;
+    }
+    document.getElementById('comlead').innerHTML="";
+    document.getElementById('opa').innerHTML="";
+    document.getElementById('opb').innerHTML="";
+    document.getElementById('opc').innerHTML="";
 }
 
 function start_chp1(){
@@ -164,6 +219,7 @@ async function chp(){
     else conver_id=tmpconverid;
     //conver_id=1;
     while(1){
+        //window.alert("new turn");
         var tmpforout=converlist[conver_id];
         SAVE();
         //获取对话人物头像
@@ -199,38 +255,55 @@ async function chp(){
         //获取对话内容
         if(tmpforout[0]=='0') stdout("lconver",tmpforout,100,1);
         else stdout("rconver",tmpforout,100,1);
-        //等待回车
-        let fulfiller = null;
-        document.addEventListener('keypress', e => {
-            if ((e.keyCode == 13 || e.keyCode == 1) && fulfiller) {
-                fulfiller();
-                fulfiller = null;
-            }
-        });
-        async function press_continue() {
-            return new Promise((fulfill, reject) => {
-                fulfiller = fulfill;
-            });
-        }
-        await press_continue();
-        //判断是否此对话下一步为结局
-        if(is_end[conver_id]!=0){
-            to_end(conver_id);
-            break;
-            // do something?
-        }
-        //判断此对话是否为章末
-        if(chap_end[conver_id]!=0){
-            current_chapter++;
-            SAVE();
-            NEXT_CHAPTER(current_chapter);
-            conver_id=start_ch[current_chapter];
-            break;
-            // do something?
-        }
-        //判断此对话是否有选项
         if(have_options[conver_id]!=0){
-            PRINT_COM(conver_id);
+            var target=comment[conver_id];
+            var header="",option1="",option2="",option3="";
+            var curpos=0;
+            for(;curpos<target.length;curpos++){
+                if(target[curpos]=='@') break;
+                header+=target[curpos];
+            }
+            for(curpos++;curpos<target.length;curpos++){
+                if(target[curpos]=='@') break;
+                option1+=target[curpos];
+            }
+            for(curpos++;curpos<target.length;curpos++){
+                if(target[curpos]=='@') break;
+                option2+=target[curpos];
+            }
+            for(curpos++;curpos<target.length;curpos++){
+                option3+=target[curpos];
+            }
+            document.getElementById('comlead').innerHTML="<h2>"+header+"</h2>";
+            if(option3!=""){
+                document.getElementById('opa').innerHTML="<button onclick=\"choose_st(1)\">"+option1+"</button>";
+                document.getElementById('opb').innerHTML="<button onclick=\"choose_st(2)\">"+option2+"</button>";
+                document.getElementById('opc').innerHTML="<button onclick=\"choose_st(3)\">"+option3+"</button>"; 
+                document.getElementById('opa').style.left="10%";
+                document.getElementById('opb').style.left="40%";
+            }
+            else{
+                document.getElementById('opa').innerHTML="<button onclick=\"choose_st(1)\">"+option1+"</button>";
+                document.getElementById('opb').innerHTML="<button onclick=\"choose_st(2)\">"+option2+"</button>";
+                document.getElementById('opc').innerHTML="";
+                document.getElementById('opa').style.left="20%";
+                document.getElementById('opb').style.left="60%";
+            }
+            st_chosen=-1;
+            let fulfiller = null;
+            document.addEventListener('keypress', e => {
+                if ((e.keyCode == 13 || e.keyCode == 1) && fulfiller) {
+                    fulfiller();
+                    fulfiller = null;
+                }
+            });
+            async function press_continue() {
+                return new Promise((fulfill, reject) => {
+                    fulfiller = fulfill;
+                });
+            }
+            await press_continue();
+            //window.alert('p');
             if(st_chosen==1){
                 conver_id=nxt1[conver_id];
             }
@@ -244,8 +317,44 @@ async function chp(){
                 window.alert("Error Code : 100 !");
                 return;
             }
+            document.getElementById('comlead').innerHTML="";
+            document.getElementById('opa').innerHTML="";
+            document.getElementById('opb').innerHTML="";
+            document.getElementById('opc').innerHTML="";
         }
-        else conver_id++;
+        else{
+            //等待回车
+            let fulfiller = null;
+            document.addEventListener('keypress', e => {
+                if ((e.keyCode == 13 || e.keyCode == 1) && fulfiller) {
+                    fulfiller();
+                    fulfiller = null;
+                }
+            });
+            async function press_continue() {
+                return new Promise((fulfill, reject) => {
+                    fulfiller = fulfill;
+                });
+            }
+            await press_continue();
+            //判断是否此对话下一步为结局
+            if(is_end[conver_id]!=0){
+                to_end(conver_id);
+                break;
+                // do something?
+            }
+            //判断此对话是否为章末
+            if(chap_end[conver_id]!=0){
+                current_chapter++;
+                SAVE();
+                NEXT_CHAPTER(current_chapter);
+                conver_id=start_ch[current_chapter];
+                break;
+                // do something?
+            }
+            conver_id++;
+        }
+        
     }
 }
 function startgame(){

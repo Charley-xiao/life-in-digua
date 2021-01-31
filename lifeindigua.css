@@ -308,3 +308,36 @@ button:hover::after {
     color: black;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
+#comlead{
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%,0%);
+    text-align: center;
+    width: 600px;
+    height: 40px;
+}
+#opa{
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    text-align: center;
+    width: 20%;
+    height: 40px;
+}
+#opb{
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    text-align: center;
+    width: 20%;
+    height: 40px;
+}
+#opc{
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    text-align: center;
+    width: 20%;
+    height: 40px;
+}
