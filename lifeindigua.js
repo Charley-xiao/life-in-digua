@@ -3,6 +3,7 @@
 function enter(){
     document.getElementById('logo').style.top="10%";
     document.getElementById('options').style.display="";
+    show_help();
 }
 function sleep(time){
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -24,7 +25,7 @@ function fadeOut(ele,speed){
     var speed=(speed/100)||10;
     function opacityOff(){
         if(opacitynum>0){
-            ele.style.opacity=opacitynum=(opacitynum-0.01).toFixed(2);
+            ele.style.opacity=opacitynum=(opacitynum-0.1).toFixed(2);
         }else{
             clearInterval(opacityt);
         }
@@ -41,7 +42,7 @@ function fadeIn(ele,speed){
     var speed=(speed/100)||10;
     function opacityAdd(){
         if(opacitynum<1){
-            ele.style.opacity=opacitynum=(parseFloat(opacitynum)+0.01).toFixed(2);
+            ele.style.opacity=opacitynum=(parseFloat(opacitynum)+0.1).toFixed(2);
         }else{
             clearInterval(opacityt);
         }
@@ -49,6 +50,28 @@ function fadeIn(ele,speed){
     var opacityt=setInterval(opacityAdd,speed);
 }
 //function end
+
+/* variables for chapter 1 */
+
+var current_chapter=0;
+var conver_id=0;
+var converlist=["","0你一定是新来的侦探吧！我叫 Solokov，是地瓜星的副首长。","1是的，您好。"];//0/1+content
+var is_end=[-1,0];
+var chap_end=[-1,0];
+var have_options=[-1,0];
+var comment=[-1];//0/1+content
+var st_chosen=-1;
+var nxt1=[-1];
+var nxt2=[-1];
+var nxt3=[-1];
+var start_ch=[-1];
+var backgroundlist=["","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png"];
+var namelist=["","Solokov@我","Solokov@我"];
+var audiolist=[""];
+var output1=["在遥远的地瓜星上，生活着一群快乐的球......","地瓜领主是这个星球的首长......","一天，球们在地瓜领主的家中发现......","地瓜领主被杀害了！",
+"究竟谁是幕后凶手？","爱恨情仇交织成的冲突，地瓜星上的迷雾重重......","将由你来揭开......"];
+
+
 function setCookie(cname,cvalue,exdays){
     var d=new Date();
     d.setTime(d.getTime()+(exdays*24*60*60*1000));
@@ -73,37 +96,37 @@ function checkCookie() {
 }
 function clearfile(){
     setCookie("username","",30000);
+    setCookie("process","",30000);
     window.alert("成功清除存档！");
 }
 
 function SAVE(){
-
+    setCookie("username",""+current_chapter,30000);
+    setCookie("process",""+conver_id,30000);
 }
 
 function show_settings(){
     document.getElementById('ALL_SETTINGS').style.display="";
-
+    document.getElementById('ALL_SETTINGS').style.opacity="0";
+    fadeIn("ALL_SETTINGS",1000);
 }
-
-/* variables for chapter 1 */
-
-var current_chapter=0;
-var conver_id=0;
-var converlist=["","0你一定是新来的侦探吧！我叫 Solokov，是地瓜星的副首长。","1是的，您好。"];//0/1+content
-var is_end=[-1,0];
-var chap_end=[-1,0];
-var have_options=[-1,0];
-var comment=[-1];//0/1+content
-var st_chosen=-1;
-var nxt1=[-1];
-var nxt2=[-1];
-var nxt3=[-1];
-var start_ch=[-1];
-var backgroundlist=["","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png"];
-var namelist=["","Solokov@我","Solokov@我"];
-
-var output1=["在遥远的地瓜星上，生活着一群快乐的球......","地瓜领主是这个星球的首长......","一天，球们在地瓜领主的家中发现......","地瓜领主被杀害了！",
-"究竟谁是幕后凶手？","爱恨情仇交织成的冲突，地瓜星上的迷雾重重......","将由你来揭开......"];
+function offsettings(){
+    //fadeOut("ALL_SETTINGS",1000);
+    document.getElementById('ALL_SETTINGS').style.display="none";
+}
+function show_help(){
+    document.getElementById('HELP').style.display="";
+    document.getElementById('HELP').style.opacity="0";
+    fadeIn("HELP",1000);
+}
+function offhelp(){
+    document.getElementById('HELP').style.display="none";
+}
+var audio_set=1;
+function changeaudio(){
+    if(audio_set==1) audio_set=0,document.getElementById('aud').value="音频：关";
+    else audio_set=1,document.getElementById('aud').value="音频：开";
+}
 
 function to_end(sign){
 
@@ -117,66 +140,86 @@ function PRINT_COM(sign){
 
 }
 
-async function chp1_next(){
+function start_chp1(){
+    var pos=0;
+    var id=setInterval(showmain1,1);
+    function showmain1(){
+        if(pos>=7) clearInterval(id),document.getElementById('stage').style.display="none",document.getElementById('offi').style.display="block";
+        else{
+            if(pos==3) document.getElementById('stage').style.color="red";
+            document.getElementById('stage').innerHTML="<h1>"+output1[pos]+"</h1>";
+            pos++;
+            document.getElementById('stage').style.color="black";
+        }
+    }
+}
+
+async function chp(){
     //document.getElementById('leftimg').style.backgroundImage="url(\"solokov2.jpg\")";
     //document.getElementById('leftname').innerHTML="<p style=\"position: relative;top: 50%;left: 50%;font-size: 20px;transform: translate(-10%,-50%);\">Solokov</p>";
     //document.getElementById('rgtname').innerHTML="<p style=\"position: relative;top: 50%;left: 50%;font-size: 20px;transform: translate(-5%,-50%);\">我</p>";
     //document.getElementById('lconver').innerHTML="\n你一定是新来的侦探吧！\n我叫 Solokov，是地瓜星的副首长。";
-    conver_id=1;
-    current_chapter=1;
+    var tmpconverid=getCookie("process");
+    if(tmpconverid=="") conver_id=1;
+    else conver_id=tmpconverid;
+    //conver_id=1;
     while(1){
         var tmpforout=converlist[conver_id];
-
+        SAVE();
+        //获取对话人物头像
         var tmpleftimg="",tmprgtimg="";
         var qpos=0;
-        for(qpos=0;qpos<backgroundlist[conver_id].length;qpos++){
-            tmpleftimg+=backgroundlist[conver_id][qpos];
-            if(backgroundlist[conver_id][qpos+1]=='@') break;
-        }
-        qpos+=2;
-        for(;qpos<backgroundlist[conver_id].length;qpos++){
-            tmprgtimg+=backgroundlist[conver_id][qpos];
-        }
-        document.getElementById('leftimg').style.backgroundImage="url(\""+tmpleftimg+"\")";
-        document.getElementById('rgtimg').style.backgroundImage="url(\""+tmprgtimg+"\")";
-
-        qpos=0;
-        var tmpleftname="",tmprgtname="";
-        for(qpos=0;qpos<namelist[conver_id].length;qpos++){
-            tmpleftname+=namelist[conver_id][qpos];
-            if(namelist[conver_id][qpos+1]=='@') break;
-        }
-        qpos+=2;
-        for(;qpos<namelist[conver_id].length;qpos++){
-            tmprgtname+=namelist[conver_id][qpos];
-        }
-        document.getElementById('leftname').innerHTML="<center><p class=\"names\">"+tmpleftname+"</p></center>";
-        document.getElementById('rgtname').innerHTML="<center><p class=\"names\">"+tmprgtname+"</p></center>";
-
+        //if(backgroundlist[conver_id]!=""){
+            for(qpos=0;qpos<backgroundlist[conver_id].length;qpos++){
+                tmpleftimg+=backgroundlist[conver_id][qpos];
+                if(backgroundlist[conver_id][qpos+1]=='@') break;
+            }
+            qpos+=2;
+            for(;qpos<backgroundlist[conver_id].length;qpos++){
+                tmprgtimg+=backgroundlist[conver_id][qpos];
+            }
+            document.getElementById('leftimg').style.backgroundImage="url(\""+tmpleftimg+"\")";
+            document.getElementById('rgtimg').style.backgroundImage="url(\""+tmprgtimg+"\")";
+        //}
+        //获取对话人物名称
+        //if(namelist[conver_id]!=""){
+            qpos=0;
+            var tmpleftname="",tmprgtname="";
+            for(qpos=0;qpos<namelist[conver_id].length;qpos++){
+                tmpleftname+=namelist[conver_id][qpos];
+                if(namelist[conver_id][qpos+1]=='@') break;
+            }
+            qpos+=2;
+            for(;qpos<namelist[conver_id].length;qpos++){
+                tmprgtname+=namelist[conver_id][qpos];
+            }
+            document.getElementById('leftname').innerHTML="<center><p class=\"names\">"+tmpleftname+"</p></center>";
+            document.getElementById('rgtname').innerHTML="<center><p class=\"names\">"+tmprgtname+"</p></center>";
+        //}
+        //获取对话内容
         if(tmpforout[0]=='0') stdout("lconver",tmpforout,100,1);
         else stdout("rconver",tmpforout,100,1);
-        
-
+        //等待回车
         let fulfiller = null;
-
         document.addEventListener('keypress', e => {
             if ((e.keyCode == 13 || e.keyCode == 1) && fulfiller) {
                 fulfiller();
                 fulfiller = null;
             }
         });
-
         async function press_continue() {
             return new Promise((fulfill, reject) => {
                 fulfiller = fulfill;
             });
         }
         await press_continue();
+        //判断是否此对话下一步为结局
         if(is_end[conver_id]!=0){
             to_end(conver_id);
             break;
             // do something?
         }
+        //判断此对话是否为章末
         if(chap_end[conver_id]!=0){
             current_chapter++;
             SAVE();
@@ -185,6 +228,7 @@ async function chp1_next(){
             break;
             // do something?
         }
+        //判断此对话是否有选项
         if(have_options[conver_id]!=0){
             PRINT_COM(conver_id);
             if(st_chosen==1){
@@ -202,20 +246,6 @@ async function chp1_next(){
             }
         }
         else conver_id++;
-        
-    }
-}
-function start_chp1(){
-    var pos=0;
-    var id=setInterval(showmain1,1);
-    function showmain1(){
-        if(pos>=7) clearInterval(id),document.getElementById('stage').style.display="none",document.getElementById('offi').style.display="block"/*,document.getElementById('sidebar').style.display="none"*/,chp1_next();
-        else{
-            if(pos==3) document.getElementById('stage').style.color="red";
-            document.getElementById('stage').innerHTML="<h1>"+output1[pos]+"</h1>";
-            pos++;
-            document.getElementById('stage').style.color="black";
-        }
     }
 }
 function startgame(){
@@ -225,8 +255,7 @@ function startgame(){
     document.getElementById('logo').style.display="none";
     document.getElementById('options').style.display="none";
     document.getElementById('mainpart').style.display="";
-    document.getElementById('offi').style.display="none";
-    if(current_chapter==0||current_chapter==1){
-        start_chp1();
-    }
+    document.getElementById('stage').style.display="none";
+    document.getElementById('offi').style.display="block";
+    chp();
 }

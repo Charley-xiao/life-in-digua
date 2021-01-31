@@ -278,15 +278,15 @@
 	</script>-->
 	<div id="logo">
   	<a onclick="enter()">
-   		<h1><span>Life</span> <span>in</span> <span>Digua</span></h1>
-   		<h2>An Original Galgam<span>e</span></h2>
+   		<h1><span>L i f e</span>&nbsp;&nbsp;<span>i n</span>&nbsp;&nbsp;<span>D i g u a</span></h1>
+   		<h2>An Original MYSTERY & THRILLER Galgam<span>e</span></h2>
   	</a>
  	</div>
  	<div id="options" style="display: none;">
  		<br/>
  		<button onclick="startgame()">开始游戏</button><br/>
  		<button onclick="show_settings()">更改设置</button><br/>
- 		<button>游戏帮助</button><br/>
+ 		<button onclick="show_help()">游戏帮助</button><br/>
  		<button onclick="clearfile()">清除存档</button><br/>
  	</div>
  	<div id="mainpart" style="display: none;">
@@ -303,7 +303,20 @@
  		</div>
  	</div>
  	<div id="ALL_SETTINGS" style="display: none;">
- 		
+ 		<center><h2>设置</h2></center><br/>
+ 		<center><input class="button button2" id="aud" type="button" onclick="changeaudio()" value="音频：开"></center>
+ 		<center><input class="button button2" type="button" onclick="offsettings()" value="关闭"/></center>
  	</div>
+ 	<div id="HELP" style="display: none;">
+ 		<center><h2>帮助</h2></center><br/>
+ 		<p>&emsp;在遥远的地瓜星上，生活着一群快乐的球，地瓜领主是这个星球的首长。然而，一天，球们在地瓜领主的家中发现————地瓜领主被杀害了！究竟谁是幕后凶手？爱恨情仇交织成的冲突，地瓜星上的迷雾重重，将由你来揭开......</p><br/>
+ 		<p>&emsp;本游戏由 Charleyxiao 制作，<a href="https://github.com/Charley-xiao/life-in-digua">Github 链接</a>，任何未经作者允许的二次创作是被禁止的。欢迎反馈任何建议！</p>
+ 		<p>&emsp;在游玩之前，您需要知道以下几点：</p>
+ 		<p>&emsp;1. 本地和网页端均可游玩，推荐使用 Firefox 浏览器，但由于卡顿明显，强烈不建议网页游玩。</p>
+ 		<p>&emsp;2. 游玩过程中，继续下段对话请键入回车。强制修改游戏数据可能导致游戏无法正常进行。</p>
+ 		<p style="color: pink;">&emsp;3. 本游戏自动存档，自动导档。由于某些原因，导入存档时会出现对话丢失。</p>
+ 		<center><input class="button button1" type="button" onclick="offhelp()" value="关闭"/></center>
+ 	</div>
+ 	<div id="nav_settings" onclick="show_settings()"></div>
 </body>
 </html>
