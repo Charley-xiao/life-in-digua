@@ -319,7 +319,7 @@ button:hover::after {
 }
 #opa{
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 10%;
     text-align: center;
     width: 20%;
@@ -327,7 +327,7 @@ button:hover::after {
 }
 #opb{
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 40%;
     text-align: center;
     width: 20%;
@@ -335,7 +335,7 @@ button:hover::after {
 }
 #opc{
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 70%;
     text-align: center;
     width: 20%;
