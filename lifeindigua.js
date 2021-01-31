@@ -12,7 +12,7 @@ async function stdout(lbname,gstr,rest,stpoint){
     var gstrl=gstr.length;
     var elem=document.getElementById(lbname);
     elem.innerHTML="";
-    for(var i=stpoint;i<gstrl;i++){
+    for(var i=stpoint;i<gstrl-1;i++){
         await sleep(rest);
         elem.innerHTML+=gstr[i];
     }
@@ -55,20 +55,20 @@ function fadeIn(ele,speed){
 
 var current_chapter=0;
 var conver_id=0;
-var converlist=["","0你一定是新来的侦探吧！我叫 Solokov，是地瓜星的副首长。","1我是 Belarus 侦探，您好。",
-"0希望你能尽快找到杀害地瓜的凶手，我们会将他绳之以法。","1我会尽我的全力的。","0拜托您了。","1test"];//0/1+content
-var is_end=[-1,0,0,0,0,0];
-var chap_end=[-1,0,0,0,0,0];
-var have_options=[-1,0,0,0,0,1];
+var converlist=["","0你一定是新来的侦探吧！我叫 Solokov，是地瓜星的副首长。1","1我是 Belarus 侦探，您好。2",
+"0希望你能尽快找到杀害地瓜的凶手，我们会将他绳之以法。3","1我会尽我的全力的。4","0拜托您了。5","3（在住处）好累啊......（打哈欠）6"];//0/1+content
+var is_end=[-1,0,0,0,0,0,0];
+var chap_end=[-1,0,0,0,0,0,0];
+var have_options=[-1,0,0,0,0,1,0];
 var comment=[-1,"","","","","我想......@去一趟犯罪现场@先回房间休息@",""];//0/1+content
 var st_chosen=-1;
-var nxt1=[-1,-1,-1,-1,-1,/*waiting*/-1.,-1];
+var nxt1=[-1,-1,-1,-1,-1,/*waiting*/-1,-1];
 var nxt2=[-1,-1,-1,-1,-1,6,-1];
 var nxt3=[-1,-1,-1,-1,-1,-1,-1];
 var start_ch=[-1,1];
 var backgroundlist=["","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png",
-"solokov2.jpg@bela1.png","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png",""];
-var namelist=["","Solokov@我","Solokov@我","Solokov@我","Solokov@我","Solokov@我",""];
+"solokov2.jpg@bela1.png","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png"," @bela2.png"];
+var namelist=["","Solokov@我","Solokov@我","Solokov@我","Solokov@我","Solokov@我"," @我"];
 var audiolist=[""];
 
 
@@ -127,7 +127,15 @@ function changeaudio(){
     if(audio_set==1) audio_set=0,document.getElementById('aud').value="音频：关";
     else audio_set=1,document.getElementById('aud').value="音频：开";
 }
-
+function myplay(str){
+    if(audio_set!=0){
+        var aud=new Audio(str);
+        aud.play();
+    }
+}
+function mainthemeplay(){
+    myplay("maintheme.mp3");
+}
 function to_end(sign){
 
 }
@@ -137,62 +145,10 @@ function NEXT_CHAPTER(sign){
 }
 function choose_st(oppp){
     st_chosen=oppp;
-}
-async function PRINT_COM(sign){
-    var target=comment[sign];
-    var header="",option1="",option2="",option3="";
-    var curpos=0;
-    for(;curpos<target.length;curpos++){
-        if(target[curpos]=='@') break;
-        header+=target[curpos];
-    }
-    for(curpos++;curpos<target.length;curpos++){
-        if(target[curpos]=='@') break;
-        option1+=target[curpos];
-    }
-    for(curpos++;curpos<target.length;curpos++){
-        if(target[curpos]=='@') break;
-        option2+=target[curpos];
-    }
-    for(curpos++;curpos<target.length;curpos++){
-        option3+=target[curpos];
-    }
-    document.getElementById('comlead').innerHTML="<h2>"+header+"</h2>";
-    document.getElementById('opa').innerHTML="<button onclick=\"choose_st(1)\">"+option1+"</button>";
-    document.getElementById('opb').innerHTML="<button onclick=\"choose_st(2)\">"+option2+"</button>";
-    document.getElementById('opc').innerHTML="<button onclick=\"choose_st(3)\">"+option3+"</button>";
-    st_chosen=-1;
-    let fulfiller = null;
-    document.addEventListener('keypress', e => {
-        if ((e.keyCode == 13 || e.keyCode == 1) && fulfiller) {
-            fulfiller();
-            fulfiller = null;
-        }
-    });
-    async function press_continue() {
-        return new Promise((fulfill, reject) => {
-            fulfiller = fulfill;
-        });
-    }
-    await press_continue();
-    //window.alert('p');
-    if(st_chosen==1){
-        conver_id=nxt1[conver_id];
-    }
-    else if(st_chosen==2){
-        conver_id=nxt2[conver_id];
-    }
-    else if(st_chosen==3){
-        conver_id=nxt3[conver_id];
-    }
-    else{
-        window.alert("Error Code : 100 !");
-        return;
-    }
-    document.getElementById('comlead').innerHTML="";
-    document.getElementById('opa').innerHTML="";
-    document.getElementById('opb').innerHTML="";
-    document.getElementById('opc').innerHTML="";
+    if(oppp==1) document.getElementById('opa').style.color="red";
+    else if(oppp==2) document.getElementById('opb').style.color="red";
+    else if(oppp==3) document.getElementById('opc').style.color="red";
+    else window.alert("Error Code : 102 !");
 }
 
 function start_chp1(){
@@ -254,7 +210,9 @@ async function chp(){
         //}
         //获取对话内容
         if(tmpforout[0]=='0') stdout("lconver",tmpforout,100,1);
-        else stdout("rconver",tmpforout,100,1);
+        else if(tmpforout[0]=='1') stdout("rconver",tmpforout,100,1);
+        else if(tmpforout[0]=='2') document.getElementById('rconver').innerHTML="",stdout("lconver",tmpforout,100,1);
+        else  document.getElementById('lconver').innerHTML="",stdout("rconver",tmpforout,100,1);
         if(have_options[conver_id]!=0){
             var target=comment[conver_id];
             var header="",option1="",option2="",option3="";
@@ -310,7 +268,7 @@ async function chp(){
             else if(st_chosen==2){
                 conver_id=nxt2[conver_id];
             }
-            else if(st_chosen==3){
+            else if(st_chosen==3&&option3!=""){
                 conver_id=nxt3[conver_id];
             }
             else{
