@@ -13,7 +13,6 @@ async function stdout(lbname,gstr,rest,stpoint){
     for(var i=stpoint;i<gstrl-1;i++){
         await sleep(rest);
         if(i==gstrl-2&&(gstr[i]=='A'||gstr[i]=='B'||gstr[i]=='C'||gstr[i]=='D')) break;
-        if(gstr[i]=='#') elem.innerHTML+='\n';
         elem.innerHTML+=gstr[i];
     }
 }
@@ -58,22 +57,36 @@ var conver_id=0;
 var converlist=["","0你一定是新来的侦探吧！我叫 Solokov，是地瓜星的副首长。1","1我是 Belarus 侦探，您好。2",
 "0希望你能尽快找到杀害地瓜的凶手，我们会将他绳之以法。3","1我会尽我的全力的。4","0拜托您了。5","3（在住处）好累啊......（打哈欠）6",
 "1要不先睡一会儿吧。7","0噔噔咚.....（敲门声）8","1（这会是谁呢）谁啊？（打开门）9","0你就是那个侦探吧。A0","1是，你是？A1",
-"0布列斯特。我就住在旁边。A2","1这样啊，你好。A3","0当然知道。A4"];//0/1+content,2->清空右部,3->清空左部
-var is_end      =[-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-var chap_end    =[-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-var have_options=[-1,0,0,0,0,1,0,0,0,0,0,0,0,1,0];
-var comment=[-1,"","","","","我想......@去一趟犯罪现场@先回房间休息@","","","","","","","",
-"我说......@今天天气不错，是吧？@你了解地瓜的这件事吗？@我还有事，先去忙了。"];
+"0布列斯特。我就住在旁边。A2","1这样啊，你好。A3","2当然知道。A4","0他是地瓜星的首领。A5","0但是我不怎么支持他......A6",
+"1怎么说？A7","2他是个独裁者，我认为。A8","0他曾经实行过高压的政策。A9","0比如舆论管控，削减工人工资之类的......B0",
+"0我自己也是工人。B1","0我是有亲身体会的。B2","0要是地瓜再继续当下去......B3","1你的意思是......B4","0对，确实。我挺希望地瓜下台的。B5",
+"0不过死我是真没想到的。B6","1那你觉得现在会变得怎么样呢？B7","0Solokov 肯定会上台。B8","0不过，怎么说呢......B9","0我感觉这个人不一般。C0",
+"1嗯......C1","0现在不早了，你去休息吧，不打扰你了。C2","1好吧，再见C3","3（过了许久）（躺在床上）明天肯定又是忙碌的一天......（闭上眼睛）C4",
+"2咚......咚......C5","3啊！C6"];//0/1+content,2->清空右部,3->清空左部
+//                   1 2 3 4 5 6 7 8 91011121314151617181920212223242526272829303132333435
+var is_end      =[-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1];
+var chap_end    =[-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var have_options=[-1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0];
+var comment=[-1,"","","","","我想......@去一趟犯罪现场。@先回房间休息。@","","","","","","","",
+"我说......@今天天气不错，是吧？@你了解地瓜的这件事吗？@我还有事，先去忙了。","","","","","",""/*19*/,"","","","","","","","","","","","","","",
+""/*34*/,"这是什么声音？@也许是风声，继续睡吧。@我得去看看。@",""];
 var st_chosen=-1;
-var nxt1=[-1,-1,-1,-1,-1,/**/-1,-1,-1,-1,-1,-1,-1,-1,/**/-1,-1];
-var nxt2=[-1,-1,-1,-1,-1,     6,-1,-1,-1,-1,-1,-1,-1,    14,-1];
-var nxt3=[-1,-1,-1,-1,-1,    -1,-1,-1,-1,-1,-1,-1,-1,/**/-1,-1];
+//            1  2  3  4  5      6  7  8  9 10 11 12 13     14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35     36
+var nxt1=[-1,-1,-1,-1,-1,/**/-1,-1,-1,-1,-1,-1,-1,-1,/**/-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,    36,-1];
+var nxt2=[-1,-1,-1,-1,-1,     6,-1,-1,-1,-1,-1,-1,-1,    14,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,/**/-1,-1];
+var nxt3=[-1,-1,-1,-1,-1,    -1,-1,-1,-1,-1,-1,-1,-1,/**/-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,    -1,-1];
 var start_ch=[-1,1];
 var backgroundlist=["","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png",
 "solokov2.jpg@bela1.png","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png"," @bela2.png"," @bela2.png"," @bela2.png"," @bela2.png",
-"brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png"];
+"brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png",
+"brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png",
+"brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png",
+"brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png",
+" @bela2.png"," @bela2.png"," @bela2.png"];
 var namelist=["","Solokov@我","Solokov@我","Solokov@我","Solokov@我","Solokov@我"," @我"," @我","？@我","？@我","布列斯特@我","布列斯特@我",
-"布列斯特@我","布列斯特@我","布列斯特@我"];
+"布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我",
+"布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我",
+"布列斯特@我","布列斯特@我"," @我","？@我"," @我"];
 var audiolist=[""];
 
 
@@ -142,7 +155,18 @@ function mainthemeplay(){
     myplay("maintheme.mp3");
 }
 function to_end(sign){
-
+    document.getElementById('endstage').style.display="";
+    document.getElementById('mainpart').style.display="none";
+    if(sign==1){
+        document.getElementById('endheader').style.opacity="0";
+        document.getElementById('endheader').innerHTML="<p>结局1</p><h1>被不明人员杀害</h1><p>达成</p>";
+        fadeIn("endheader",10000);
+        conver_id--;
+        SAVE();
+        document.getElementById('endcontent').style.opacity="0";
+        document.getElementById('endcontent').innerHTML="进度已保存，刷新以重新开始";
+        fadeIn("endcontent",10000);
+    }
 }
 
 function NEXT_CHAPTER(sign){
@@ -302,7 +326,8 @@ async function chp(){
             await press_continue();
             //判断是否此对话下一步为结局
             if(is_end[conver_id]!=0){
-                to_end(conver_id);
+                SAVE();
+                to_end(is_end[conver_id]);
                 break;
                 // do something?
             }
