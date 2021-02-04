@@ -1,5 +1,3 @@
-
-
 function enter(){
     document.getElementById('logo').style.top="10%";
     document.getElementById('options').style.display="";
@@ -14,6 +12,8 @@ async function stdout(lbname,gstr,rest,stpoint){
     elem.innerHTML="";
     for(var i=stpoint;i<gstrl-1;i++){
         await sleep(rest);
+        if(i==gstrl-2&&(gstr[i]=='A'||gstr[i]=='B'||gstr[i]=='C'||gstr[i]=='D')) break;
+        if(gstr[i]=='#') elem.innerHTML+='\n';
         elem.innerHTML+=gstr[i];
     }
 }
@@ -56,19 +56,24 @@ function fadeIn(ele,speed){
 var current_chapter=0;
 var conver_id=0;
 var converlist=["","0你一定是新来的侦探吧！我叫 Solokov，是地瓜星的副首长。1","1我是 Belarus 侦探，您好。2",
-"0希望你能尽快找到杀害地瓜的凶手，我们会将他绳之以法。3","1我会尽我的全力的。4","0拜托您了。5","3（在住处）好累啊......（打哈欠）6"];//0/1+content
-var is_end=[-1,0,0,0,0,0,0];
-var chap_end=[-1,0,0,0,0,0,0];
-var have_options=[-1,0,0,0,0,1,0];
-var comment=[-1,"","","","","我想......@去一趟犯罪现场@先回房间休息@",""];//0/1+content
+"0希望你能尽快找到杀害地瓜的凶手，我们会将他绳之以法。3","1我会尽我的全力的。4","0拜托您了。5","3（在住处）好累啊......（打哈欠）6",
+"1要不先睡一会儿吧。7","0噔噔咚.....（敲门声）8","1（这会是谁呢）谁啊？（打开门）9","0你就是那个侦探吧。A0","1是，你是？A1",
+"0布列斯特。我就住在旁边。A2","1这样啊，你好。A3","0当然知道。A4"];//0/1+content,2->清空右部,3->清空左部
+var is_end      =[-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var chap_end    =[-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var have_options=[-1,0,0,0,0,1,0,0,0,0,0,0,0,1,0];
+var comment=[-1,"","","","","我想......@去一趟犯罪现场@先回房间休息@","","","","","","","",
+"我说......@今天天气不错，是吧？@你了解地瓜的这件事吗？@我还有事，先去忙了。"];
 var st_chosen=-1;
-var nxt1=[-1,-1,-1,-1,-1,/*waiting*/-1,-1];
-var nxt2=[-1,-1,-1,-1,-1,6,-1];
-var nxt3=[-1,-1,-1,-1,-1,-1,-1];
+var nxt1=[-1,-1,-1,-1,-1,/**/-1,-1,-1,-1,-1,-1,-1,-1,/**/-1,-1];
+var nxt2=[-1,-1,-1,-1,-1,     6,-1,-1,-1,-1,-1,-1,-1,    14,-1];
+var nxt3=[-1,-1,-1,-1,-1,    -1,-1,-1,-1,-1,-1,-1,-1,/**/-1,-1];
 var start_ch=[-1,1];
 var backgroundlist=["","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png",
-"solokov2.jpg@bela1.png","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png"," @bela2.png"];
-var namelist=["","Solokov@我","Solokov@我","Solokov@我","Solokov@我","Solokov@我"," @我"];
+"solokov2.jpg@bela1.png","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png"," @bela2.png"," @bela2.png"," @bela2.png"," @bela2.png",
+"brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png","brest.jpg@bela2.png"];
+var namelist=["","Solokov@我","Solokov@我","Solokov@我","Solokov@我","Solokov@我"," @我"," @我","？@我","？@我","布列斯特@我","布列斯特@我",
+"布列斯特@我","布列斯特@我","布列斯特@我"];
 var audiolist=[""];
 
 
@@ -209,10 +214,10 @@ async function chp(){
             document.getElementById('rgtname').innerHTML="<center><p class=\"names\">"+tmprgtname+"</p></center>";
         //}
         //获取对话内容
-        if(tmpforout[0]=='0') stdout("lconver",tmpforout,100,1);
-        else if(tmpforout[0]=='1') stdout("rconver",tmpforout,100,1);
-        else if(tmpforout[0]=='2') document.getElementById('rconver').innerHTML="",stdout("lconver",tmpforout,100,1);
-        else  document.getElementById('lconver').innerHTML="",stdout("rconver",tmpforout,100,1);
+        if(tmpforout[0]=='0') stdout("lconver",tmpforout,60,1);
+        else if(tmpforout[0]=='1') stdout("rconver",tmpforout,60,1);
+        else if(tmpforout[0]=='2') document.getElementById('rconver').innerHTML="",stdout("lconver",tmpforout,60,1);
+        else  document.getElementById('lconver').innerHTML="",stdout("rconver",tmpforout,60,1);
         if(have_options[conver_id]!=0){
             var target=comment[conver_id];
             var header="",option1="",option2="",option3="";
@@ -325,4 +330,19 @@ function startgame(){
     document.getElementById('stage').style.display="none";
     document.getElementById('offi').style.display="block";
     chp();
+}
+var egglist=["你真的想知道真相吗？","为什么不自己去寻找呢？","嫌疑人已经浮出水面了......","难道你还不知道吗？","去搜寻更多线索吧......",
+"你不觉得......","你自己很可悲吗？","被困在这里......","企图找到凶手......","你是否曾想过，为什么你会被请来？","想过吗？",
+"你还记得自己是从哪里来的吗？","你知道自己是谁吗？","你不知道......","因为......","你的θ®°εΏ†记忆撌脩�#&被-(%@!!~",
+"逃иє«ењЁе°дё–дёЌз§°ж„离Џ ж¬Іе‡єдё–иЂЊеїѓзѕЎд№‹ еѕЉ这дёЌе®љйљѕжЉ‰ж‹© и°里ЃзџҐиє«еїѓеђ‘дЅ•е¤„！"];
+async function easter_egg(){
+    console.clear();
+    for(var i=0;i<egglist.length;i++){
+        if(i>1&&current_chapter<2) break;
+        if(i>4&&current_chapter<3) break;
+        console.log(egglist[i]);
+        await sleep(3000);
+    }
+    await sleep(3000);
+    console.clear();
 }
