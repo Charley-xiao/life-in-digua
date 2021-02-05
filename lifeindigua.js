@@ -1,8 +1,4 @@
-function enter(){
-    document.getElementById('logo').style.top="10%";
-    document.getElementById('options').style.display="";
-    show_help();
-}
+var global_effect=0;
 function sleep(time){
     return new Promise((resolve) => setTimeout(resolve, time));
 }
@@ -32,7 +28,40 @@ function fadeOut(ele,speed){
     var opacityt=setInterval(opacityOff,speed);
 }
 //function end
-
+function enter(){
+    document.getElementById('logo').style.top="10%";
+    document.getElementById('options').style.display="";
+    show_help();
+    document.getElementById('logo').addEventListener("click",function(){
+        var current_time=new Date();
+        if(current_time.getHours()=="0"||current_time.getHours()=="24"||current_time.getHours()=="00"){
+            global_effect=1;
+            document.getElementById('logoo').id="dead";
+            document.getElementById('body').style.background="black";
+            document.getElementById('options').style.display="none";
+            document.getElementById('nav_settings').style.display="none";
+            document.getElementById('HELP').style.display="none";
+            document.getElementById('logo').style.top="50%";
+            document.getElementById('logo').style.transform="translate(0,-50%)";
+            document.getElementById('logoa').innerHTML+="<h1 style=\"color: red;\" id=\"logob\"></h1>";
+            document.getElementById('HELP').innerHTML="";document.getElementById('ALL_SETTINGS').innerHTML="";
+            var tmptmpsss="<a style=\"color: red;font-size: 20px;\">逃иє«ењЁе°дё–дёЌз§°ж„离Џ ж¬Іе‡єдё–иЂЊеїѓзѕЎд№‹ еѕЉ这дёЌе®љйљѕжЉ‰ж‹© и°里ЃзџҐиє«еїѓеђ‘дЅ•е¤„！</a>";
+            for(var countr=0;countr<=10;countr++)
+             document.getElementById('HELP').innerHTML+=tmptmpsss,document.getElementById('ALL_SETTINGS').innerHTML+=tmptmpsss;
+            document.getElementById('HELP').innerHTML+="<center><input class=\"button button1\" type=\"button\" onclick=\"offhelp()\" value=\"关闭\"/></center>"
+            document.getElementById('ALL_SETTINGS').innerHTML+="<center><input class=\"button button2\" type=\"button\" onclick=\"offsettings()\" value=\"关闭\"/></center>"
+            var identity=setInterval(logob_showtime,1000);
+            function logob_showtime(){
+                var tmp_time=new Date();
+                var strrrr="";
+                strrrr+=tmp_time.getHours()+':';
+                strrrr+=tmp_time.getMinutes()+':';
+                strrrr+=tmp_time.getSeconds();
+                document.getElementById('logob').innerHTML=strrrr;
+            }
+        }
+    });
+}
 //fadeIn
 //function start
 function fadeIn(ele,speed){
@@ -89,7 +118,21 @@ var namelist=["","Solokov@我","Solokov@我","Solokov@我","Solokov@我","Soloko
 "布列斯特@我","布列斯特@我"," @我","？@我"," @我"];
 var audiolist=[""];
 
-
+var egglist=["你真的想知道真相吗？","为什么不自己去寻找呢？","嫌疑人已经浮出水面了......","难道你还不知道吗？","去搜寻更多线索吧......",
+"你不觉得......","你自己很可悲吗？","被困在这里......","企图找到凶手......","你是否曾想过，为什么你会被请来？","想过吗？",
+"你还记得自己是从哪里来的吗？","你知道自己是谁吗？","你不知道......","因为......","你的θ®°εΏ†记忆撌脩�#&被-(%@!!~",
+"逃иє«ењЁе°дё–дёЌз§°ж„离Џ ж¬Іе‡єдё–иЂЊеїѓзѕЎд№‹ еѕЉ这дёЌе®љйљѕжЉ‰ж‹© и°里ЃзџҐиє«еїѓеђ‘дЅ•е¤„！"];
+async function easter_egg(){
+    console.clear();
+    for(var i=0;i<egglist.length;i++){
+        if(i>1&&current_chapter<2) break;
+        if(i>4&&current_chapter<3) break;
+        console.log(egglist[i]);
+        await sleep(3000);
+    }
+    await sleep(3000);
+    console.clear();
+}
 function setCookie(cname,cvalue,exdays){
     var d=new Date();
     d.setTime(d.getTime()+(exdays*24*60*60*1000));
@@ -195,14 +238,16 @@ function start_chp1(){
 }
 
 async function chp(){
-    //document.getElementById('leftimg').style.backgroundImage="url(\"solokov2.jpg\")";
-    //document.getElementById('leftname').innerHTML="<p style=\"position: relative;top: 50%;left: 50%;font-size: 20px;transform: translate(-10%,-50%);\">Solokov</p>";
-    //document.getElementById('rgtname').innerHTML="<p style=\"position: relative;top: 50%;left: 50%;font-size: 20px;transform: translate(-5%,-50%);\">我</p>";
-    //document.getElementById('lconver').innerHTML="\n你一定是新来的侦探吧！\n我叫 Solokov，是地瓜星的副首长。";
     var tmpconverid=getCookie("process");
     if(tmpconverid=="") conver_id=1;
     else conver_id=tmpconverid;
     //conver_id=1;
+    if(global_effect!=0){
+        for(var i=0;i<converlist.length;i++){
+            if(i&1) converlist[i]="0逃иє«ењЁе°дё–дёЌз§°ж„离Џ ж¬Іе‡єдё–иЂЊеїѓзѕЎд№‹ еѕЉ这дёЌе®љйљѕжЉ‰ж‹© и°里ЃзџҐиє«еїѓеђ‘дЅ•е¤„！1";
+            else converlist[i]="1逃иє«ењЁе°дё–дёЌз§°ж„离Џ ж¬Іе‡єдё–иЂЊеїѓзѕЎд№‹ еѕЉ这дёЌе®љйљѕжЉ‰ж‹© и°里ЃзџҐиє«еїѓеђ‘дЅ•е¤„！1";
+        }
+    }
     while(1){
         //window.alert("new turn");
         var tmpforout=converlist[conver_id];
@@ -349,25 +394,11 @@ function startgame(){
     var tmp_cookie=getCookie("username");
     if(tmp_cookie!="") current_chapter=tmp_cookie;
     else current_chapter=1;
+    if(global_effect==0) document.getElementById('body').style.background="";
     document.getElementById('logo').style.display="none";
     document.getElementById('options').style.display="none";
     document.getElementById('mainpart').style.display="";
     document.getElementById('stage').style.display="none";
     document.getElementById('offi').style.display="block";
     chp();
-}
-var egglist=["你真的想知道真相吗？","为什么不自己去寻找呢？","嫌疑人已经浮出水面了......","难道你还不知道吗？","去搜寻更多线索吧......",
-"你不觉得......","你自己很可悲吗？","被困在这里......","企图找到凶手......","你是否曾想过，为什么你会被请来？","想过吗？",
-"你还记得自己是从哪里来的吗？","你知道自己是谁吗？","你不知道......","因为......","你的θ®°εΏ†记忆撌脩�#&被-(%@!!~",
-"逃иє«ењЁе°дё–дёЌз§°ж„离Џ ж¬Іе‡єдё–иЂЊеїѓзѕЎд№‹ еѕЉ这дёЌе®љйљѕжЉ‰ж‹© и°里ЃзџҐиє«еїѓеђ‘дЅ•е¤„！"];
-async function easter_egg(){
-    console.clear();
-    for(var i=0;i<egglist.length;i++){
-        if(i>1&&current_chapter<2) break;
-        if(i>4&&current_chapter<3) break;
-        console.log(egglist[i]);
-        await sleep(3000);
-    }
-    await sleep(3000);
-    console.clear();
 }
