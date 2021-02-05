@@ -34,7 +34,7 @@ function enter(){
     show_help();
     document.getElementById('logo').addEventListener("click",function(){
         var current_time=new Date();
-        if(current_time.getHours()=="0"||current_time.getHours()=="24"||current_time.getHours()=="00"){
+        if(current_time.getHours()=="00"||current_time.getHours()=="24"||current_time.getHours()=="0"){
             global_effect=1;
             document.getElementById('logoo').id="dead";
             document.getElementById('body').style.background="black";
