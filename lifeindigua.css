@@ -208,6 +208,7 @@ button:hover::after {
     right: 5%;
     width: 25%;
     height: 10%;
+    font-family: cursive;
 }
 #rconver{
     background-color: #F7EED6;
