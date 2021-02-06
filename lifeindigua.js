@@ -1,3 +1,4 @@
+//2021/2/6 23:45
 var global_effect=0;
 function sleep(time){
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -153,6 +154,17 @@ async function easter_egg(){
     await sleep(3000);
     console.clear();
 }
+var mythlist=["醒来吧......","醒来吧，迷路的人......","你已经沉睡了很久了......","é†’æ¥å§ï¼Œè¿·è·¯ç„äºº","别沉迷于幻象......",
+"不要认为一切都是正常的......","把自己变疯吧......","选择那些不可理喻的路......","你才能醒过来......"];
+async function myths(){
+    console.clear();
+    for(var i=0;i<mythlist.length;i++){
+        console.log(mythlist[i]);
+        await sleep(3000);
+    }
+    await sleep(3000);
+    console.clear();
+}
 function setCookie(cname,cvalue,exdays){
     var d=new Date();
     d.setTime(d.getTime()+(exdays*24*60*60*1000));
@@ -268,13 +280,13 @@ async function chp(){
             else converlist[i]="1逃иє«ењЁе°дё–дёЌз§°ж„离Џ ж¬Іе‡єдё–иЂЊеїѓзѕЎд№‹ еѕЉ这дёЌе®љйљѕжЉ‰ж‹© и°里ЃзџҐиє«еїѓеђ‘дЅ•е¤„！1";
         }
         for(var i=0;i<comment.length;i++){
-            comment[i]="鍒仠鐣欏湪杩欓噷锛佸揩绂诲紑锛�@иє«ењЁе°дё–дёЌз§°ж„@Џ ж¬Іе‡єдё–иЂЊеїѓзѕЎд№‹ еѕЉ@дёЌе®љйљѕжЉ‰ж‹© и°ЃзџҐиє«еїѓеђ‘дЅ•е¤„";
+            comment[i]="鍒仠鐣控制台杩欓�@easter_egg()ёЌз§°ж„@Џ ж¬Іе‡єдё–иmyths()ЂЊеїѓзѕЎд№‹ еѕЉ@дёЌе®љйљѕжЉ‰ж‹© и°ЃзџҐиє«еїѓеђ‘дЅ•е¤„";
         }
         for(var i=0;i<backgroundlist.length;i++){
             backgroundlist[i]="unknown.jpg@unknown.jpg";
         }
         for(var i=0;i<namelist.length;i++){
-            namelist[i]="獵삣�瓦숅뇤@з¦»ејЂиї™й‡Њ";
+            namelist[i]="獵삣�easter_egg()瓦숅뇤@з¦»ејЂmyths()иї™й‡Њ";
         }
     }
     while(1){
