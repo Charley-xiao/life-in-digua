@@ -1,5 +1,6 @@
-//2021/2/6 23:45
 var global_effect=0;
+var maintheme_ogg=new Audio("src/in_full.ogg");
+maintheme_ogg.play();
 function sleep(time){
     return new Promise((resolve) => setTimeout(resolve, time));
 }
@@ -64,7 +65,6 @@ function enter(){
     });
 }
 //fadeIn
-//function start
 function fadeIn(ele,speed){
     var ele=document.getElementById(ele);
     var opacitynum=ele.style.opacity||0;
@@ -78,7 +78,13 @@ function fadeIn(ele,speed){
     }
     var opacityt=setInterval(opacityAdd,speed);
 }
-//function end
+function myplay(str){
+    if(audio_set!=0){
+        var aud=new Audio("src/"+str);
+        aud.play();
+    }
+}
+
 
 /* variables for chapter 1 */
 
@@ -187,7 +193,9 @@ function checkCookie() {
     if(name!="") window.alert("成功导入存档！");
     else window.alert("未检测到可用存档，点击开始游戏创建新存档！");
 }
+var audio_set=1;
 function clearfile(){
+    if(audio_set!=0) myplay("item_click.wav");
     setCookie("username","",30000);
     setCookie("process","",30000);
     window.alert("成功清除存档！");
@@ -199,32 +207,30 @@ function SAVE(){
 }
 
 function show_settings(){
+    if(audio_set!=0) myplay("menu_in.wav");
     document.getElementById('ALL_SETTINGS').style.display="";
     document.getElementById('ALL_SETTINGS').style.opacity="0";
     fadeIn("ALL_SETTINGS",1000);
 }
 function offsettings(){
+    if(audio_set!=0) myplay("item_click.wav");
     //fadeOut("ALL_SETTINGS",1000);
     document.getElementById('ALL_SETTINGS').style.display="none";
 }
 function show_help(){
+    if(audio_set!=0) myplay("menu_in.wav");
     document.getElementById('HELP').style.display="";
     document.getElementById('HELP').style.opacity="0";
     fadeIn("HELP",1000);
 }
 function offhelp(){
+    if(audio_set!=0) myplay("item_click.wav");
     document.getElementById('HELP').style.display="none";
 }
-var audio_set=1;
+
 function changeaudio(){
-    if(audio_set==1) audio_set=0,document.getElementById('aud').value="音频：关";
+    if(audio_set==1) maintheme_ogg.pause(),audio_set=0,document.getElementById('aud').value="音频：关";
     else audio_set=1,document.getElementById('aud').value="音频：开";
-}
-function myplay(str){
-    if(audio_set!=0){
-        var aud=new Audio(str);
-        aud.play();
-    }
 }
 function mainthemeplay(){
     myplay("maintheme.mp3");
@@ -233,6 +239,7 @@ function to_end(sign){
     document.getElementById('endstage').style.display="";
     document.getElementById('mainpart').style.display="none";
     if(sign==1){
+        if(audio_set!=0) myplay("res_fail_full.ogg");
         document.getElementById('endheader').style.opacity="0";
         document.getElementById('endheader').innerHTML="<p>结局1</p><h1>被不明人员杀害</h1><p>达成</p>";
         fadeIn("endheader",10000);
@@ -378,6 +385,7 @@ async function chp(){
                 });
             }
             await press_continue();
+            if(audio_set!=0) myplay("step.wav");
             //window.alert('p');
             if(st_chosen==1){
                 conver_id=nxt1[conver_id];
@@ -413,6 +421,7 @@ async function chp(){
                 });
             }
             await press_continue();
+            if(audio_set!=0) myplay("suki.wav");
             //判断是否此对话下一步为结局
             if(is_end[conver_id]!=0){
                 SAVE();
@@ -435,6 +444,8 @@ async function chp(){
     }
 }
 function startgame(){
+    maintheme_ogg.pause();
+    if(audio_set!=0) myplay("menu_in.wav");
     var tmp_cookie=getCookie("username");
     if(tmp_cookie!="") current_chapter=tmp_cookie;
     else current_chapter=1;

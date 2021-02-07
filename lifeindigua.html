@@ -1,0 +1,66 @@
+<html>
+<head>
+	<title>Life in Digua</title>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" sizes="57x57" href="src/icon.jpg"/>
+	<meta name="keywords" content="游戏"/>
+    <meta name="author" content="Charleyxiao"/>
+	<script src="jquery-3.5.1.js"></script>
+	<script src="lifeindigua.js"></script>
+	<link href="lifeindigua.css" rel="stylesheet" type="text/css"/>
+	<!--<script src="requirejs-2.3.6/require.js"></script>-->
+</head>
+<body id="body">
+	<div id="logo">
+  	<a onclick="enter()" id="logoa">
+   		<h1 id="logoo"><span>L i f e</span>&nbsp;&nbsp;<span>i n</span>&nbsp;&nbsp;<span>D i g u a</span></h1>
+   		<h2>An Original MYSTERY & THRILLER Gam<span>e</span></h2>
+  	</a>
+ 	</div>
+ 	<div id="options" style="display: none;">
+ 		<br/>
+ 		<button onclick="startgame()">开始游戏</button><br/>
+ 		<button onclick="show_settings()">更改设置</button><br/>
+ 		<button onclick="show_help()">游戏帮助</button><br/>
+ 		<button onclick="clearfile()">清除存档</button><br/>
+ 	</div>
+ 	<div id="mainpart" style="display: none;">
+ 		<div id="sidebar">Chapter 1&emsp;&emsp;开端<br/>选择选项后按下回车以继续，无选项则直接按下回车</div>
+ 		<div id="stage">Loading......</div>
+ 		<div id="offi">
+ 			<div id="leftimg"></div>
+ 			<div id="leftname"></div>
+ 			<div id="lconver"></div>
+ 			<div id="rgtimg"></div>
+ 			<div id="rgtname"></div>
+ 			<div id="rconver"></div>
+	 		<div id="comment">
+	 			<div id="comlead"></div>
+	 			<div id="opa"></div>
+	 			<div id="opb"></div>
+	 			<div id="opc"></div>
+	 		</div>
+ 		</div>
+ 	</div>
+ 	<div id="endstage" style="display: none;">
+ 		<div id="endheader"></div>
+ 		<div id="endcontent"></div>
+ 	</div>
+ 	<div id="ALL_SETTINGS" style="display: none;">
+ 		<center><h2>设置</h2></center><br/>
+ 		<center><input class="button button2" id="aud" type="button" onclick="changeaudio()" value="音频：开"></center>
+ 		<center><input class="button button2" type="button" onclick="offsettings()" value="关闭"/></center>
+ 	</div>
+ 	<div id="HELP" style="display: none;">
+ 		<center><h2>帮助</h2></center><br/>
+ 		<p>&emsp;在遥远的地瓜星上，生活着一群快乐的球，地瓜领主是这个星球的首长。然而，一天，球们在地瓜领主的家中发现————地瓜领主被杀害了！究竟谁是幕后凶手？爱恨情仇交织成的冲突，地瓜星上的迷雾重重，将由你来揭开......</p><br/>
+ 		<p>&emsp;本游戏由 Charleyxiao 制作，<a href="https://github.com/Charley-xiao/life-in-digua">Github 链接</a>，任何未经作者允许的二次创作是被禁止的。欢迎反馈任何建议！</p>
+ 		<p>&emsp;在游玩之前，您需要知道以下几点：</p>
+ 		<p>&emsp;1. <a style="color: red;background-color: gold;">注意！必须使用电脑游玩！</a>本地和网页端均可游玩，推荐使用 Firefox 浏览器，但由于卡顿明显，强烈不建议网页游玩。</p>
+ 		<p>&emsp;2. 游玩过程中，继续下段对话请键入回车。强制修改游戏数据可能导致游戏无法正常进行。</p>
+ 		<p>&emsp;3. 网页端自动存档导档，本地需手动存档导档。手动存档需打开控制台，获取 current_chapter 和 conver_id 的变量信息并记下。手动导档时对 current_chapter 和 conver_id 进行赋值，再输入 SAVE() 即可。由于某些原因，导入存档时可能会出现对话丢失。</p>
+ 		<center><input class="button button1" type="button" onclick="offhelp()" value="关闭"/></center>
+ 	</div>
+ 	<div id="nav_settings" onclick="show_settings()"></div>
+</body>
+</html>
