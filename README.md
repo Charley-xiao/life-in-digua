@@ -49,3 +49,7 @@ An Original Mysterious Galgame.
 新角色锅巴出场。   
 
 优化了结构。
+
+## 2021/2/7  
+
+更新了音效。
