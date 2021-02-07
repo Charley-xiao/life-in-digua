@@ -1,5 +1,7 @@
 var global_effect=0;
+var how_do_i_name_it=new Date();
 var maintheme_ogg=new Audio("src/in_full.ogg");
+if(how_do_i_name_it.getHours()=="0") maintheme_ogg=new Audio("src/haunted.mp3");
 maintheme_ogg.play();
 function sleep(time){
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -444,7 +446,7 @@ async function chp(){
     }
 }
 function startgame(){
-    maintheme_ogg.pause();
+    if(global_effect==0) maintheme_ogg.pause();
     if(audio_set!=0) myplay("menu_in.wav");
     var tmp_cookie=getCookie("username");
     if(tmp_cookie!="") current_chapter=tmp_cookie;
