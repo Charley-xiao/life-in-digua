@@ -54,6 +54,6 @@ An Original Mysterious Galgame.
 
 更新了音效。   
 
-## 2021/2/7  
+## 2021/2/8  
 
 更新了剧情。
