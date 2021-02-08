@@ -250,7 +250,7 @@ button:hover::after {
     top: 50%;
     left: 50%;
     width: 50%;
-    height: 53%;
+    height: 55%;
     transform: translate(-50%,-50%);
     color: white;
     transition-duration: 1s;
@@ -380,4 +380,18 @@ button:hover::after {
 }
 #dead{
     
+}
+#ack{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 53%;
+    transform: translate(-50%,-50%);
+    color: black;
+    transition-duration: 1s;
+    border-radius: 50px;
+    background: linear-gradient(145deg,white,grey);
+    box-shadow:  35px 35px 70px #515151,
+             -35px -35px 70px #afafaf;
 }
