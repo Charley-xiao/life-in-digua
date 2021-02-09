@@ -2,9 +2,9 @@
 
 打开 lifeindigua.html 以游玩。
 
-An Original Mysterious Galgame.    
+An Original Mysterious Game.    
 
-一个原创悬疑 Galgame。
+一个原创悬疑游戏。
 
 # 更新日志
 
@@ -56,4 +56,8 @@ An Original Mysterious Galgame.
 
 ## 2021/2/8  
 
-更新了剧情。
+更新了剧情。  
+
+## 2021/2/9  
+
+更新了人物头像。

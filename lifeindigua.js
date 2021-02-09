@@ -153,8 +153,8 @@ var backgroundlist=["","solokov2.jpg@bela1.png","solokov2.jpg@bela1.png",
 "unknown.jpg@unknown.jpg","pg.jpg@bela3.jpg","pg.jpg@bela3.jpg"," @ ","pg.jpg@bela3.jpg","pg.jpg@bela3.jpg","pg.jpg@bela3.jpg",
 "pg.jpg@bela3.jpg","pg.jpg@bela3.jpg","pg.jpg@bela3.jpg"," @bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg",
 "guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg",
-"guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg",
-"guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg",
+"guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","guoba_scared.jpg@bela3.jpg",
+"guoba_scared.jpg@bela3.jpg","guoba_scared.jpg@bela3.jpg","guoba_scared.jpg@bela3.jpg","guoba_scared.jpg@bela3.jpg","guoba_scared.jpg@bela3.jpg","guoba.jpg@bela3.jpg",
 "guoba.jpg@bela3.jpg","guoba.jpg@bela3.jpg","pg.jpg@bela3.jpg","pg.jpg@bela3.jpg","pg.jpg@bela3.jpg","pg.jpg@bela3.jpg","pg.jpg@bela3.jpg"];
 var namelist=["","Solokov@我","Solokov@我","Solokov@我","Solokov@我","Solokov@我"," @我"," @我","？@我","？@我","布列斯特@我","布列斯特@我",
 "布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我","布列斯特@我",
@@ -256,6 +256,8 @@ function changeaudio(){
 function show_acknowledgement(){
     if(audio_set!=0) myplay("menu_in.wav");
     document.getElementById('ack').style.display="";
+    document.getElementById('ack').style.opacity="0";
+    fadeIn("ack",1000);
 }
 function offack(){
     if(audio_set!=0) myplay("item_click.wav");
@@ -423,7 +425,7 @@ async function chp(){
                 conver_id=nxt3[conver_id];
             }
             else{
-                if(global_effect==0) window.alert("Error Code : 100 !\n可能原因：\n1. 按下回车过快；\n2. 没有选择选项。\n请刷新解决。");
+                if(global_effect==0) window.alert("Error Code : 100 !\n可能原因：\n1. 按下回车过快；\n2. 没有选择选项。\n3.选项未完成。\n请刷新解决。");
                 else window.alert("ç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œ");
                 return;
             }
@@ -483,3 +485,34 @@ function startgame(){
     document.getElementById('offi').style.display="block";
     chp();
 }
+/*
+
+有时候我感觉自己就是个废物，不如说自己就是个废物。
+
+就拿这个游戏来说，整个写的都不知道是个什么玩意儿。
+
+UI 丑的要命，框架也有有问题，算法逻辑不知道是什么东西，还麻烦别人这样那样。
+
+之前也用 HTML+JS+CSS 写过东西，比这还丑。
+
+我想通过这来证明自己至少还有点用处，但是我错了，我就是个废物。
+
+网页设计，设计不好像一坨稀饭；学了三年 OI 连个一等奖都没混到；在学校文化课也烂得连一本线都没有。
+
+我活着还有啥用处。
+
+最近压力很大，也很抑郁，可能是我在矫情。
+
+我真的受够了每天在别人面前非得挤出一张笑脸，我真的笑不起来。
+
+不想去看心理医生，那玩意一点用处都没有。
+
+至少，要是我哪天真的受不了了，这个游戏还能留着。
+
+要是有人不小心看到了这段话，别拿来调侃我，也不要问我任何问题。
+
+2021/2/9
+
+Закрой за мной дверь, я ухожу.
+
+*/
