@@ -6,8 +6,18 @@
 var global_effect=0;
 var how_do_i_name_it=new Date();
 var maintheme_ogg=new Audio("src/in_full.ogg");
+var default_rest=1;
 if(how_do_i_name_it.getHours()=="0") maintheme_ogg=new Audio("src/haunted.mp3");
-maintheme_ogg.play();
+var mainthemeplayed=0;
+function fuckaudioplay(){
+    document.body.appendChild(maintheme_ogg);
+    document.body.addEventListener("mousemove", function () {
+        if(mainthemeplayed==0){
+            maintheme_ogg.play();
+            mainthemeplayed=1;
+        }
+    });
+}
 function sleep(time){
     return new Promise((resolve) => setTimeout(resolve, time));
 }
@@ -16,7 +26,8 @@ async function stdout(lbname,gstr,rest,stpoint){
     var elem=document.getElementById(lbname);
     elem.innerHTML="";
     for(var i=stpoint;i<gstrl-1;i++){
-        await sleep(rest);
+        if(rest>60) await sleep(rest);
+        else await sleep(default_rest);
         if(i==gstrl-2&&(gstr[i]=='A'||gstr[i]=='B'||gstr[i]=='C'||gstr[i]=='D'||gstr[i]=='E'||gstr[i]=='F'||gstr[i]=='G'||gstr[i]=='H'||gstr[i]=='I'||gstr[i]=='J'||gstr[i]=='K'||gstr[i]=='L')) break;
         elem.innerHTML+=gstr[i];
     }
@@ -401,33 +412,37 @@ async function chp(){
             }
             st_chosen=-1;
             let fulfiller = null;
-            document.addEventListener('keypress', e => {
-                if ((e.keyCode == 13 || e.keyCode == 1) && fulfiller) {
-                    fulfiller();
-                    fulfiller = null;
-                }
-            });
-            async function press_continue() {
-                return new Promise((fulfill, reject) => {
-                    fulfiller = fulfill;
+            while(1){
+                document.addEventListener('keypress', e => {
+                    if ((e.keyCode == 13 || e.keyCode == 1) && fulfiller) {
+                        fulfiller();
+                        fulfiller = null;
+                    }
                 });
-            }
-            await press_continue();
-            if(audio_set!=0) myplay("step.wav");
-            //window.alert('p');
-            if(st_chosen==1){
-                conver_id=nxt1[conver_id];
-            }
-            else if(st_chosen==2){
-                conver_id=nxt2[conver_id];
-            }
-            else if(st_chosen==3&&option3!=""){
-                conver_id=nxt3[conver_id];
-            }
-            else{
-                if(global_effect==0) window.alert("Error Code : 100 !\n可能原因：\n1. 按下回车过快；\n2. 没有选择选项。\n3.选项未完成。\n请刷新解决。");
-                else window.alert("ç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œ");
-                return;
+                async function press_continue() {
+                    return new Promise((fulfill, reject) => {
+                        fulfiller = fulfill;
+                    });
+                }
+                await press_continue();
+                if(audio_set!=0) myplay("step.wav");
+                //window.alert('p');
+                if(st_chosen==1){
+                    conver_id=nxt1[conver_id];
+                    break;
+                }
+                else if(st_chosen==2){
+                    conver_id=nxt2[conver_id];
+                    break;
+                }
+                else if(st_chosen==3&&option3!=""){
+                    conver_id=nxt3[conver_id];
+                    break;
+                }
+                else{
+                    if(global_effect==0) window.alert("Error Code : 100 !\n可能原因：\n1. 按下回车过快；\n2. 没有选择选项。\n3.选项未完成。\n请重新选择。\n");
+                    else window.alert("ç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œç¦»å¼€è¿™é‡Œ");
+                }
             }
             document.getElementById('comlead').innerHTML="";
             document.getElementById('opa').innerHTML="";
