@@ -317,7 +317,7 @@ function start_chp1(){
 
 async function chp(){
     var tmpconverid=getCookie("process");
-    if((tmpconverid=="")||(tmpconverid==undefined)) conver_id=1;
+    if((tmpconverid=="")||(tmpconverid==undefined)||(tmpconverid<0)) conver_id=1;
     else conver_id=tmpconverid;
     //conver_id=1;
     if(global_effect!=0){
