@@ -489,6 +489,7 @@ async function chp(){
 function startgame(){
     if(global_effect==0) maintheme_ogg.pause();
     if(audio_set!=0) myplay("menu_in.wav");
+    if(audio_set!=0&&global_effect!=0) myplay("haunted.mp3");
     var tmp_cookie=getCookie("username");
     if(tmp_cookie!="") current_chapter=tmp_cookie;
     else current_chapter=1;
